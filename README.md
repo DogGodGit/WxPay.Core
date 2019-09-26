@@ -1,0 +1,2 @@
+# WxPay.Core
+WxPay.Core
