@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/DogGodGit/WxPay.Core.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DogGodGit/WxPay.Core.git</RepositoryUrl>
+    <Description>WxPay.Core</Description>
+    <PackageReleaseNotes>WxPay.Core</PackageReleaseNotes>
+    <PackageTags>WxPay.Core</PackageTags>
+    <PackageLicenseUrl>https://github.com/DogGodGit/WxPay.Core/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>1.0.0-alpha.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LitJson" Version="0.14.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.0.0" />
+    <PackageReference Include="ThoughtWorks.QRCode.Core" Version="1.0.1.2" />
+  </ItemGroup>
+
+</Project>
