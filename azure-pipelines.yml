@@ -12,10 +12,17 @@ pool:
 
 # do this before all your .NET Core tasks
 steps:
-- task: DotNetCoreCLI@2
-  displayName: Build
+- task: DotNetCoreCLI@1
+  displayName: build
   inputs:
     command: 'build'
     projects: 'WxPayDemo/WxPayDemo.csproj'
-    arguments: '--configuration Release'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
  
