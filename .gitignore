@@ -2,10 +2,6 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
-/WxPayDemo/obj
-/WxPayDemo/bin/Debug/netcoreapp2.1
-/.vs
-/WxPay.Core/bin
-/WxPay.Core/obj
-/WxPayAPI/bin
-/WxPayAPI/obj
+obj
+bin
+.vs
