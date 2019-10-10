@@ -4,11 +4,11 @@ namespace WxPayAPI
 {
     public class Log
     {
-        /**
-         * 向日志写入调试信息
-         * @param className 类名
-         * @param content 写入内容
-         */
+        /// <summary>
+        /// 向日志写入调试信息
+        /// </summary>
+        /// <param name="className">类名</param>
+        /// <param name="content">写入内容</param>
         public static void Debug(string className, string content)
         {
             if (WxPayConfig.GetConfig().GetLogLevel() >= 3)
@@ -17,11 +17,11 @@ namespace WxPayAPI
             }
         }
 
-        /**
-        * 向日志写入运行时信息
-        * @param className 类名
-        * @param content 写入内容
-        */
+        /// <summary>
+        /// 向日志写入运行时信息
+        /// </summary>
+        /// <param name="className">类名</param>
+        /// <param name="content">写入内容</param>
         public static void Info(string className, string content)
         {
             if (WxPayConfig.GetConfig().GetLogLevel() >= 2)
@@ -30,11 +30,11 @@ namespace WxPayAPI
             }
         }
 
-        /**
-        * 向日志写入出错信息
-        * @param className 类名
-        * @param content 写入内容
-        */
+        /// <summary>
+        /// 向日志写入出错信息
+        /// </summary>
+        /// <param name="className">类名</param>
+        /// <param name="content">写入内容</param>
         public static void Error(string className, string content)
         {
             if (WxPayConfig.GetConfig().GetLogLevel() >= 1)
@@ -43,12 +43,12 @@ namespace WxPayAPI
             }
         }
 
-        /**
-        * 实际的写日志操作
-        * @param type 日志记录类型
-        * @param className 类名
-        * @param content 写入内容
-        */
+        /// <summary>
+        /// 实际的写日志操作
+        /// </summary>
+        /// <param name="type">日志记录类型</param>
+        /// <param name="className">类名</param>
+        /// <param name="content">写入内容</param>
         protected static void WriteLog(string type, string className, string content)
         {
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");//获取当前系统时间

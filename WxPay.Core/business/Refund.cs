@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-namespace WxPayAPI
+﻿namespace WxPayAPI
 {
     public class Refund
     {
-        /***
-        * 申请退款完整业务流程逻辑
-        * @param transaction_id 微信订单号（优先使用）
-        * @param out_trade_no 商户订单号
-        * @param total_fee 订单总金额
-        * @param refund_fee 退款金额
-        * @return 退款结果（xml格式）
-        */
+        /// <summary>
+        /// 申请退款完整业务流程逻辑
+        /// </summary>
+        /// <param name="transaction_id">微信订单号（优先使用）</param>
+        /// <param name="out_trade_no">商户订单号</param>
+        /// <param name="total_fee">订单总金额</param>
+        /// <param name="refund_fee">退款金额</param>
+        /// <returns>退款结果（xml格式）</returns>
         public static string Run(string transaction_id, string out_trade_no, string total_fee, string refund_fee)
         {
             Log.Info("Refund", "Refund is processing...");

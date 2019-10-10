@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 
 namespace WxPayAPI
 {
     public class NativePay
     {
-        /**
-        * 生成扫描支付模式一URL
-        * @param productId 商品ID
-        * @return 模式一URL
-        */
+        /// <summary>
+        /// 生成扫描支付模式一URL
+        /// </summary>
+        /// <param name="productId">商品ID</param>
+        /// <returns>模式一URL</returns>
         public string GetPrePayUrl(string productId)
         {
             Log.Info(this.GetType().ToString(), "Native pay mode 1 url is producing...");
@@ -29,11 +28,11 @@ namespace WxPayAPI
             return url;
         }
 
-        /**
-        * 生成直接支付url，支付url有效期为2小时,模式二
-        * @param productId 商品ID
-        * @return 模式二URL
-        */
+        /// <summary>
+        /// 生成直接支付url，支付url有效期为2小时,模式二
+        /// </summary>
+        /// <param name="productId">商品ID</param>
+        /// <returns>模式二URL</returns>
         public string GetPayUrl(string productId)
         {
             Log.Info(this.GetType().ToString(), "Native pay mode 2 url is producing...");
@@ -56,11 +55,11 @@ namespace WxPayAPI
             return url;
         }
 
-        /**
-        * 参数数组转换为url格式
-        * @param map 参数名与参数值的映射表
-        * @return URL字符串
-        */
+        /// <summary>
+        /// 参数数组转换为url格式
+        /// </summary>
+        /// <param name="map">参数名与参数值的映射表</param>
+        /// <returns>URL字符串</returns>
         private string ToUrlParams(SortedDictionary<string, object> map)
         {
             string buff = "";

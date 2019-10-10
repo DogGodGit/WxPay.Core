@@ -28,23 +28,21 @@ namespace WxPayAPI
         //采用排序的Dictionary的好处是方便对数据包进行签名，不用再签名之前再做一次排序
         private SortedDictionary<string, object> m_values = new SortedDictionary<string, object>();
 
-        /**
-        * 设置某个字段的值
-        * @param key 字段名
-         * @param value 字段值
-        */
-
+        /// <summary>
+        /// 设置某个字段的值
+        /// </summary>
+        /// <param name="key">字段名</param>
+        /// <param name="value">字段值</param>
         public void SetValue(string key, object value)
         {
             m_values[key] = value;
         }
 
-        /**
-        * 根据字段名获取某个字段的值
-        * @param key 字段名
-         * @return key对应的字段值
-        */
-
+        /// <summary>
+        /// 根据字段名获取某个字段的值
+        /// </summary>
+        /// <param name="key">字段名</param>
+        /// <returns>key对应的字段值</returns>
         public object GetValue(string key)
         {
             object o = null;
@@ -52,12 +50,11 @@ namespace WxPayAPI
             return o;
         }
 
-        /**
-         * 判断某个字段是否已设置
-         * @param key 字段名
-         * @return 若字段key已被设置，则返回true，否则返回false
-         */
-
+        /// <summary>
+        /// 判断某个字段是否已设置
+        /// </summary>
+        /// <param name="key">字段名</param>
+        /// <returns>若字段key已被设置，则返回true，否则返回false</returns>
         public bool IsSet(string key)
         {
             object o = null;
@@ -68,12 +65,10 @@ namespace WxPayAPI
                 return false;
         }
 
-        /**
-        * @将Dictionary转成xml
-        * @return 经转换得到的xml串
-        * @throws WxPayException
-        **/
-
+        /// <summary>
+        /// 将Dictionary转成xml
+        /// </summary>
+        /// <returns>经转换得到的xml串</returns>
         public string ToXml()
         {
             //数据为空时不能转化为xml格式
@@ -111,13 +106,11 @@ namespace WxPayAPI
             return xml;
         }
 
-        /**
-        * @将xml转为WxPayData对象并返回对象内部的数据
-        * @param string 待转换的xml串
-        * @return 经转换得到的Dictionary
-        * @throws WxPayException
-        */
-
+        /// <summary>
+        /// 将xml转为WxPayData对象并返回对象内部的数据
+        /// </summary>
+        /// <param name="xml">待转换的xml串</param>
+        /// <returns>经转换得到的Dictionary</returns>
         public SortedDictionary<string, object> FromXml(string xml)
         {
             if (string.IsNullOrEmpty(xml))
@@ -153,11 +146,10 @@ namespace WxPayAPI
             return m_values;
         }
 
-        /**
-        * @Dictionary格式转化成url参数格式
-        * @ return url格式串, 该串不包含sign字段值
-        */
-
+        /// <summary>
+        /// Dictionary格式转化成url参数格式
+        /// </summary>
+        /// <returns>url格式串, 该串不包含sign字段值</returns>
         public string ToUrl()
         {
             string buff = "";
@@ -178,21 +170,20 @@ namespace WxPayAPI
             return buff;
         }
 
-        /**
-        * @Dictionary格式化成Json
-         * @return json串数据
-        */
-
+        /// <summary>
+        /// Dictionary格式化成Json
+        /// </summary>
+        /// <returns>json串数据</returns>
         public string ToJson()
         {
             string jsonStr = JsonMapper.ToJson(m_values);
             return jsonStr;
         }
 
-        /**
-        * @values格式化成能在Web页面上显示的结果（因为web页面上不能直接输出xml格式的字符串）
-        */
-
+        /// <summary>
+        /// 格式化成能在Web页面上显示的结果（因为web页面上不能直接输出xml格式的字符串）
+        /// </summary>
+        /// <returns></returns>
         public string ToPrintStr()
         {
             string str = "";
@@ -211,11 +202,11 @@ namespace WxPayAPI
             return str;
         }
 
-        /**
-        * @生成签名，详见签名生成算法
-        * @return 签名, sign字段不参加签名
-        */
-
+        /// <summary>
+        /// 生成签名，详见签名生成算法
+        /// </summary>
+        /// <param name="signType"></param>
+        /// <returns>签名</returns>
         public string MakeSign(string signType)
         {
             //转url格式
@@ -246,22 +237,20 @@ namespace WxPayAPI
             }
         }
 
-        /**
-        * @生成签名，详见签名生成算法
-        * @return 签名, sign字段不参加签名 SHA256
-        */
-
+        /// <summary>
+        /// 生成签名，详见签名生成算法
+        /// </summary>
+        /// <returns>签名SHA256</returns>
         public string MakeSign()
         {
             return MakeSign(SIGN_TYPE_HMAC_SHA256);
         }
 
-        /**
-        *
-        * 检测签名是否正确
-        * 正确返回true，错误抛异常
-        */
-
+        /// <summary>
+        /// 检测签名是否正确
+        /// </summary>
+        /// <param name="signType"></param>
+        /// <returns>正确返回true，错误抛异常</returns>
         public bool CheckSign(string signType)
         {
             //如果没有设置签名，则跳过检测
@@ -293,21 +282,19 @@ namespace WxPayAPI
             throw new WxPayException("WxPayData签名验证错误!");
         }
 
-        /**
-        *
-        * 检测签名是否正确
-        * 正确返回true，错误抛异常
-        */
-
+        /// <summary>
+        /// 检测签名是否正确
+        /// </summary>
+        /// <returns>正确返回true，错误抛异常</returns>
         public bool CheckSign()
         {
             return CheckSign(SIGN_TYPE_HMAC_SHA256);
         }
 
-        /**
-        * @获取Dictionary
-        */
-
+        /// <summary>
+        /// 获取Dictionary
+        /// </summary>
+        /// <returns></returns>
         public SortedDictionary<string, object> GetValues()
         {
             return m_values;
@@ -320,7 +307,7 @@ namespace WxPayAPI
             byte[]
             baText2BeHashed = enc.GetBytes(plaintext),
             baSalt = enc.GetBytes(salt);
-            System.Security.Cryptography.HMACSHA256 hasher = new HMACSHA256(baSalt);
+            HMACSHA256 hasher = new HMACSHA256(baSalt);
             byte[] baHashedText = hasher.ComputeHash(baText2BeHashed);
             result = string.Join("", baHashedText.ToList().Select(b => b.ToString("x2")).ToArray());
             return result;

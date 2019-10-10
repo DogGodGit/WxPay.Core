@@ -2,15 +2,14 @@
 
 namespace WxPayAPI
 {
-    /**
-    * 	配置账号信息
-    */
-
+    /// <summary>
+    /// 配置账号信息
+    /// </summary>
     public class WxPayConfig
     {
-        private static volatile IConfig config;
+        public static volatile IConfig config;
 
-        private static object syncRoot = new object();
+        private static readonly object syncRoot = new object();
 
         public static IConfig GetConfig()
         {

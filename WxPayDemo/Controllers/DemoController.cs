@@ -74,8 +74,8 @@ namespace WxPayDemo.Controllers
             //若传递了相关参数，则调统一下单接口，获得后续相关接口的入口参数
             JsApiPay jsApiPay = new JsApiPay(_httpContext)
             {
-                openid = openid,
-                total_fee = int.Parse(total_fee)
+                Openid = openid,
+                Total_Fee = int.Parse(total_fee)
             };
 
             //JSAPI支付预处理
@@ -189,19 +189,12 @@ namespace WxPayDemo.Controllers
 
                 //获取收货地址js函数入口参数
                 string wxEditAddrParam = jsApiPay.GetEditAddressParameters();
-                return jsApiPay.openid;
+                return jsApiPay.Openid;
             }
             catch (Exception ex)
             {
                 return ex.Message;
             }
-        }
-
-        [HttpGet("ProductUrl")]
-        public ActionResult<string> GetProductUrl(string openid, string total_fee)
-        {
-            string url = "http://paysdk.weixin.qq.com/example/JsApiPayPage.aspx?openid=" + openid + "&total_fee=" + total_fee;
-            return url;
         }
 
         /// <summary>
@@ -275,6 +268,26 @@ namespace WxPayDemo.Controllers
             {
                 return ex.ToString();
             }
+        }
+
+        /// <summary>
+        /// 扫码支付模式回调
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult<string> GetNativeNotify()
+        {
+            NativeNotify nativeNatify = new NativeNotify(_httpContext);
+            return nativeNatify.ProcessNotify();
+        }
+
+        /// <summary>
+        /// 支付结果通知回调
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult<string> GetResultNotify()
+        {
+            ResultNotify resultNotify = new ResultNotify(_httpContext);
+            return resultNotify.ProcessNotify();
         }
     }
 }
