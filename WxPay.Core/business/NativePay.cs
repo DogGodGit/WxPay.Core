@@ -49,10 +49,19 @@ namespace WxPayAPI
             data.SetValue("product_id", productId);//商品ID
 
             WxPayData result = WxPayApi.UnifiedOrder(data);//调用统一下单接口
-            string url = result.GetValue("code_url").ToString();//获得统一下单接口返回的二维码链接
 
-            Log.Info(this.GetType().ToString(), "Get native pay mode 2 url : " + url);
-            return url;
+            if (result.GetValue("code_url") != null)
+            {
+                string url = result.GetValue("code_url").ToString();//获得统一下单接口返回的二维码链接
+
+                Log.Info(this.GetType().ToString(), "Get native pay mode 2 url : " + url);
+                return url;
+            }
+            else
+            {
+                Log.Info(this.GetType().ToString(), "Get native pay mode 2 url : " + result.GetValue("return_msg"));
+                return result.GetValue("return_msg").ToString();
+            }
         }
 
         /// <summary>

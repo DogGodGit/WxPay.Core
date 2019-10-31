@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace WxPayAPI
 {
@@ -58,6 +59,27 @@ namespace WxPayAPI
 
             //需要用户自定义日志实现形式
             Console.WriteLine(write_content);
+
+            var dir = AppDomain.CurrentDomain.BaseDirectory + @"\log\";
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            var fileName = dir + type + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+
+            //没有则创建这个文件
+            if (!File.Exists(fileName))
+            {
+                File.Create(fileName);
+            }
+
+            using (StreamWriter sw = File.AppendText(fileName))
+            {
+                sw.WriteLine("-----------");
+                sw.WriteLine(write_content);
+            }
         }
     }
 }

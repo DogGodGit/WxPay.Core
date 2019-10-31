@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,19 +53,44 @@ namespace WxPayDemo
                 // 过滤属性
                 options.IgnoreObsoleteProperties();
             });
+
+            // 请求上下文
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //允许一个或多个具体来源:
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowedCors", policy =>
+                {
+                    // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
+                    policy.WithOrigins("*")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            // 异常记录
+            app.UseExceptionHandler(builder =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
+                builder.Run(async context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    context.Response.ContentType = "application/json";
+                    var ex = context.Features.Get<IExceptionHandlerFeature>();
+                    if (ex != null)
+                    {
+                        //记录日志
+                        //Logger.Error(ex.Error.Message, ex.Error);
+                    }
+
+                    await context.Response.WriteAsync(ex?.Error?.Message ?? "an error occure");
+                });
+            });
 
             #region Swagger
 

@@ -27,32 +27,30 @@ namespace WxPayDemo.Controllers
         }
 
         /// <summary>
-        /// 下载对账单完整业务流程逻辑,一次只能下载一天的对账单
+        /// 获取用户的openid和access_token
+        /// 第一步：利用url跳转获取code
+        /// 第二步：利用code去获取openid和access_token
         /// </summary>
-        /// <param name="bill_date">下载对账单的日期（格式：20140603）</param>
-        /// <param name="bill_type">
-        /// 账单类型
-        /// ALL，返回当日所有订单信息，默认值
-        /// SUCCESS，返回当日成功支付的订单
-        /// REFUND，返回当日退款订单
-        /// REVOKED，已撤销的订单
-        /// </param>
-        /// <returns>对账单结果（xml格式</returns>
-        [HttpGet("DownloadBill")]
-        public ActionResult<string> GetDownloadBill(string bill_date, string bill_type)
+        /// <returns>openid和access_token</returns>
+        [HttpGet("OpenidAndAccessToken")]
+        public ActionResult<dynamic> GetOpenidAndAccessToken(string code = "")
         {
-            //调用下载对账单接口,如果内部出现异常则在页面上显示异常原因
+            JsApiPay jsApiPay = new JsApiPay(_httpContext);
             try
             {
-                return DownloadBill.Run(bill_date, bill_type);
-            }
-            catch (WxPayException ex)
-            {
-                return ex.ToString();
+                //调用【网页授权获取用户信息】接口获取用户的openid和access_token
+                string result = jsApiPay.GetOpenidAndAccessToken(code);
+
+                if (!string.IsNullOrEmpty(result))
+                {
+                    return result;
+                }
+
+                return new { jsApiPay.Openid, jsApiPay.Access_Token };
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return ex.Message;
             }
         }
 
@@ -97,6 +95,17 @@ namespace WxPayDemo.Controllers
         }
 
         /// <summary>
+        /// 支付结果通知回调
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("ResultNotify")]
+        public ActionResult<string> GetResultNotify()
+        {
+            ResultNotify resultNotify = new ResultNotify(_httpContext);
+            return resultNotify.ProcessNotify();
+        }
+
+        /// <summary>
         /// 二维码生成
         /// </summary>
         /// <param name="productId">商品ID</param>
@@ -120,6 +129,17 @@ namespace WxPayDemo.Controllers
 
             //将url生成二维码图片
             return MakeQRCode.GetMakeQRCodeBase64String(HttpUtility.UrlEncode(url));
+        }
+
+        /// <summary>
+        /// 扫码支付模式回调
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("NativeNotify")]
+        public ActionResult<string> GetNativeNotify()
+        {
+            NativeNotify nativeNatify = new NativeNotify(_httpContext);
+            return nativeNatify.ProcessNotify();
         }
 
         /// <summary>
@@ -178,18 +198,18 @@ namespace WxPayDemo.Controllers
             }
         }
 
-        [HttpGet("Product")]
-        public ActionResult<string> GetOrderQuery()
+        /// <summary>
+        /// 获取收货地址
+        /// </summary>
+        /// <returns>返回Openid</returns>
+        [HttpGet("GetAddress")]
+        public ActionResult<string> GetAddress(string accesstoken)
         {
             JsApiPay jsApiPay = new JsApiPay(_httpContext);
             try
             {
-                //调用【网页授权获取用户信息】接口获取用户的openid和access_token
-                jsApiPay.GetOpenidAndAccessToken();
-
                 //获取收货地址js函数入口参数
-                string wxEditAddrParam = jsApiPay.GetEditAddressParameters();
-                return jsApiPay.Openid;
+                return jsApiPay.GetEditAddressParameters(accesstoken);
             }
             catch (Exception ex)
             {
@@ -271,23 +291,33 @@ namespace WxPayDemo.Controllers
         }
 
         /// <summary>
-        /// 扫码支付模式回调
+        /// 下载对账单完整业务流程逻辑,一次只能下载一天的对账单
         /// </summary>
-        /// <returns></returns>
-        public ActionResult<string> GetNativeNotify()
+        /// <param name="bill_date">下载对账单的日期（格式：20140603）</param>
+        /// <param name="bill_type">
+        /// 账单类型
+        /// ALL，返回当日所有订单信息，默认值
+        /// SUCCESS，返回当日成功支付的订单
+        /// REFUND，返回当日退款订单
+        /// REVOKED，已撤销的订单
+        /// </param>
+        /// <returns>对账单结果（xml格式</returns>
+        [HttpGet("DownloadBill")]
+        public ActionResult<string> GetDownloadBill(string bill_date, string bill_type)
         {
-            NativeNotify nativeNatify = new NativeNotify(_httpContext);
-            return nativeNatify.ProcessNotify();
-        }
-
-        /// <summary>
-        /// 支付结果通知回调
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult<string> GetResultNotify()
-        {
-            ResultNotify resultNotify = new ResultNotify(_httpContext);
-            return resultNotify.ProcessNotify();
+            //调用下载对账单接口,如果内部出现异常则在页面上显示异常原因
+            try
+            {
+                return DownloadBill.Run(bill_date, bill_type);
+            }
+            catch (WxPayException ex)
+            {
+                return ex.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
     }
 }

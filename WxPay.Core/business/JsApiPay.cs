@@ -1,7 +1,6 @@
 ﻿using LitJson;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Linq;
 using System.Web;
 
 namespace WxPayAPI
@@ -51,39 +50,42 @@ namespace WxPayAPI
         /// 第一步：利用url跳转获取code
         /// 第二步：利用code去获取openid和access_token
         /// </remarks>
-        public void GetOpenidAndAccessToken()
+        public string GetOpenidAndAccessToken(string code)
         {
             //获取code码，以获取openid和access_token
-            string code = _httpContext.HttpContext.Request.Query["code"].FirstOrDefault();
-
             if (!string.IsNullOrEmpty(code))
             {
                 Log.Debug(this.GetType().ToString(), "Get code : " + code);
                 GetOpenidAndAccessTokenFromCode(code);
+
+                return "";
             }
             else
             {
                 //构造网页授权获取code的URL
-                string host = _httpContext.HttpContext.Request.Host.Host;
-                string path = _httpContext.HttpContext.Request.Path;
-                string redirect_uri = HttpUtility.UrlEncode("http://" + host + path);
-                WxPayData data = new WxPayData();
-                data.SetValue("appid", WxPayConfig.GetConfig().GetAppID());
-                data.SetValue("redirect_uri", redirect_uri);
-                data.SetValue("response_type", "code");
-                data.SetValue("scope", "snsapi_base");
-                data.SetValue("state", "STATE" + "#wechat_redirect");
-                string url = "https://open.weixin.qq.com/connect/oauth2/authorize?" + data.ToUrl();
-                Log.Debug(this.GetType().ToString(), "Will Redirect to URL : " + url);
-                try
-                {
-                    //触发微信返回code码
-                    _httpContext.HttpContext.Response.Redirect(url);//Redirect函数会抛出ThreadAbortException异常，不用处理这个异常
-                }
-                catch (System.Threading.ThreadAbortException ex)
-                {
-                }
+                return GetRedirectURL();
             }
+        }
+
+        /// <summary>
+        /// 构造网页授权获取code的URL
+        /// </remarks>
+        public string GetRedirectURL()
+        {
+            //构造网页授权获取code的URL
+            string host = _httpContext.HttpContext.Request.Host.Host;
+            string path = _httpContext.HttpContext.Request.Path;
+            string redirect_uri = HttpUtility.UrlEncode("http://" + host + path);
+            WxPayData data = new WxPayData();
+            data.SetValue("appid", WxPayConfig.GetConfig().GetAppID());
+            data.SetValue("redirect_uri", redirect_uri);
+            data.SetValue("response_type", "code");
+            data.SetValue("scope", "snsapi_base");
+            data.SetValue("state", "STATE" + "#wechat_redirect");
+            string url = "https://open.weixin.qq.com/connect/oauth2/authorize?" + data.ToUrl();
+            Log.Debug(this.GetType().ToString(), "Will Redirect to URL : " + url);
+
+            return url;
         }
 
         /// <summary>
@@ -124,13 +126,22 @@ namespace WxPayAPI
 
                 //保存access_token，用于收货地址获取
                 JsonData jd = JsonMapper.ToObject(result);
-                Access_Token = (string)jd["access_token"];
 
-                //获取用户openid
-                Openid = (string)jd["openid"];
+                if (result.Contains("errcode"))
+                {
+                    string errmsg = jd["errmsg"].ToString();
+                    Log.Error(this.GetType().ToString(), errmsg);
+                }
+                else
+                {
+                    Access_Token = (string)jd["access_token"];
 
-                Log.Debug(this.GetType().ToString(), "Get openid : " + Openid);
-                Log.Debug(this.GetType().ToString(), "Get access_token : " + Access_Token);
+                    //获取用户openid
+                    Openid = (string)jd["openid"];
+
+                    Log.Debug(this.GetType().ToString(), "Get openid : " + Openid);
+                    Log.Debug(this.GetType().ToString(), "Get access_token : " + Access_Token);
+                }
 
                 return jd;
             }
@@ -211,7 +222,7 @@ namespace WxPayAPI
         /// 详情请参考收货地址共享接口：http://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_9
         /// </remarks>
         /// <returns>共享收货地址js函数需要的参数，json格式可以直接做参数使用</returns>
-        public string GetEditAddressParameters()
+        public string GetEditAddressParameters(string accesstoken = "ACCESS_TOKEN")
         {
             string parameter = "";
             try
@@ -229,7 +240,7 @@ namespace WxPayAPI
                 signData.SetValue("url", url);
                 signData.SetValue("timestamp", WxPayApi.GenerateTimeStamp());
                 signData.SetValue("noncestr", WxPayApi.GenerateNonceStr());
-                signData.SetValue("accesstoken", Access_Token);
+                signData.SetValue("accesstoken", accesstoken);
                 string param = signData.ToUrl();
 
                 Log.Debug(this.GetType().ToString(), "SHA1 encrypt param : " + param);
