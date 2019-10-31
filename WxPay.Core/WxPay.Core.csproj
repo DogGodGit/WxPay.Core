@@ -11,7 +11,7 @@
     <PackageTags>WxPay.Core</PackageTags>
     <PackageLicenseUrl>https://github.com/DogGodGit/WxPay.Core/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.0-alpha.1</Version>
+    <Version>1.0.0-alpha.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
