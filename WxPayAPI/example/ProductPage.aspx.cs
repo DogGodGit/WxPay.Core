@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WxPayAPI
 {
@@ -20,7 +15,7 @@ namespace WxPayAPI
         ///     timeStamp：时间戳
         ///     nonceStr: 随机字符串
         /// </summary>
-        public static string wxEditAddrParam {get;set;}
+        public static string wxEditAddrParam { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,10 +46,10 @@ namespace WxPayAPI
         protected void Button1_Click(object sender, EventArgs e)
         {
             string total_fee = "1";
-            if(ViewState["openid"] != null)
+            if (ViewState["openid"] != null)
             {
                 string openid = ViewState["openid"].ToString();
-                string url = "http://paysdk.weixin.qq.com/example/JsApiPayPage.aspx?openid=" + openid + "&total_fee=" + total_fee;
+                string url = "JsApiPayPage.aspx?openid=" + openid + "&total_fee=" + total_fee;
                 Response.Redirect(url);
             }
             else
@@ -66,14 +61,14 @@ namespace WxPayAPI
                 Label2.Visible = false;
             }
         }
-        
+
         protected void Button2_Click(object sender, EventArgs e)
         {
             string total_fee = "2";
             if (ViewState["openid"] != null)
             {
                 string openid = ViewState["openid"].ToString();
-                string url = "http://paysdk.weixin.qq.com/example/JsApiPayPage.aspx?openid=" + openid + "&total_fee=" + total_fee;
+                string url = "JsApiPayPage.aspx?openid=" + openid + "&total_fee=" + total_fee;
                 Response.Redirect(url);
             }
             else

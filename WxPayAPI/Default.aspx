@@ -61,7 +61,7 @@
 <body runat="server">
 	<div align="center">
         <ul>
-            <li style="background-color:#00CD00"><a href="example/DownloadBillPage.aspx">JSAPI支付</a></li>
+            <li style="background-color:#00CD00"><a href="example/ProductPage.aspx">JSAPI支付</a></li>
             <li style="background-color:#00CD00"><a href="example/MicroPayPage.aspx">刷卡支付</a></li>
             <li style="background-color:#00CD00"><a href="example/NativePayPage.aspx">扫码支付</a></li>
             <li style="background-color:#00CD00"><a href="example/OrderQueryPage.aspx">订单查询</a></li>

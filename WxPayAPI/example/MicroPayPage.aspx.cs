@@ -17,7 +17,6 @@ namespace WxPayAPI
 
         protected void submit_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrEmpty(auth_code.Text))
             {
                 Response.Write("<script LANGUAGE='javascript'>alert('请输入授权码！');</script>");

@@ -28,8 +28,23 @@ namespace WxPayAPI
             string url2 = nativePay.GetPayUrl("123456789");
 
             //将url生成二维码图片
-            Image1.ImageUrl = "MakeQRCode.aspx?data=" + HttpUtility.UrlEncode(url1);
-            Image2.ImageUrl = "MakeQRCode.aspx?data=" + HttpUtility.UrlEncode(url2);
+            if (!url1.Contains("weixin"))
+            {
+                Response.Write("<span style='color:#FF0000;font-size:20px'>" + url1 + "</span>");
+            }
+            else
+            {
+                Image1.ImageUrl = "MakeQRCode.aspx?data=" + HttpUtility.UrlEncode(url1);
+            }
+
+            if (!url2.Contains("weixin"))
+            {
+                Response.Write("<span style='color:#FF0000;font-size:20px'>" + url2 + "</span>");
+            }
+            else
+            {
+                Image2.ImageUrl = "MakeQRCode.aspx?data=" + HttpUtility.UrlEncode(url2);
+            }
         }
     }
 }

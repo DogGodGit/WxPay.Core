@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+此文件由 Web 项目的发布/打包过程使用。可以通过编辑此 MSBuild 文件
+自定义此过程的行为。为了解与此相关的更多内容，请访问 https://go.microsoft.com/fwlink/?LinkID=208121。 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\WxPay.Core\WxPayAPI\bin\Release\Publish</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/LitJson.dll">
+      <publishTime>05/19/2014 21:40:54</publishTime>
+    </File>
+    <File Include="bin/ThoughtWorks.QRCode.dll">
+      <publishTime>10/12/2013 10:34:24</publishTime>
+    </File>
+    <File Include="bin/WebApi.xml">
+      <publishTime>10/31/2019 17:44:42</publishTime>
+    </File>
+    <File Include="bin/WxPayAPI.dll">
+      <publishTime>10/31/2019 17:44:42</publishTime>
+    </File>
+    <File Include="bin/WxPayAPI.pdb">
+      <publishTime>10/31/2019 17:44:42</publishTime>
+    </File>
+    <File Include="Default.aspx">
+      <publishTime>10/31/2019 12:21:57</publishTime>
+    </File>
+    <File Include="example/DownloadBillPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/JsApiPayPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/MakeQRCode.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/MicroPayPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/NativeNotifyPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/NativePayPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/OrderQueryPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/ProductPage.aspx">
+      <publishTime>10/31/2019 17:41:42</publishTime>
+    </File>
+    <File Include="example/RefundPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/RefundQueryPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="example/ResultNotifyPage.aspx">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.7.1.intellisense.js">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.7.1.js">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.7.1.min.js">
+      <publishTime>07/04/2018 15:45:46</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/31/2019 13:51:23</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
