@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="LitJson" Version="0.14.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Include="ThoughtWorks.QRCode.Core" Version="1.0.1.2" />
   </ItemGroup>
 
